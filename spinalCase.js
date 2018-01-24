@@ -12,6 +12,6 @@ function spinalCase(str) {
   newstr = newstr.replace(/^\s*/,'');
   //Using the spaces we added, split the string into words.
   var arr = newstr.split(/\s+/);
-  //Get rid of any extra dashes (for dashes used as word-breaks.)
-  return arr.join("-").replace(/-+/g,'-');
+  //Get rid of any extra dashes (for dashes used as word-breaks).
+  return arr.join("-").replace(/-+/g,'-').replace(/^-/,'');
 }
