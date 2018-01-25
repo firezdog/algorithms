@@ -1,7 +1,7 @@
 //Function to return the sum of all odd Fibonacci numbers less than a given number.  The function
-//is supposed, first, to create an array of all Fibonacci numbers up to the given number
-//and, second, to loop through all elements of the array less than the given number, adding together
-//those that happen to be odd.
+//is supposed, first, to create an array of all Fibonacci numbers up to the given number (ideally you would get
+//the first Fibonacci greater than the number into the array) and, second, to loop through all elements of the array 
+//less than the given number, adding together those that happen to be odd.
 
 function sumFibs(num) {
     var fibs = [1,1];
