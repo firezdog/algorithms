@@ -1,7 +1,7 @@
 import java.util.*;
 
-public class SmallestInt {
-    public int SmallestInt(int[] A)
+public class Solution {
+    public int solution(int[] A)
     {
         Arrays.sort(A);
         if (A[A.length - 1] < 0) return 1;
@@ -12,11 +12,14 @@ public class SmallestInt {
             else return 1;
         }
         if (A[0] > 1) return 1;
-        for (int i = 1; i < A.length; i++) {
+        int next = 1;
+        for (int i = 0; i < A.length - 1; i++) {
             if (A[i] <= 0) continue;
-            if (A[i - 1] == A[i]) continue;
-            if (A[i] != A[i - 1] + 1) return A[i - 1] + 1;
+            if (A[i] == A[i + 1]) continue;
+            if (A[i] != next) return next;
+            next++;
         }
+        if (A[A.length - 1] != next) return next;
         return A[A.length - 1] + 1;
     }
 }
