@@ -13,21 +13,21 @@ we try to increase the size of the sub-sequence.  When we we overshoot the sum, 
 
 we found the sub-sequence.  Otherwise, we should restart the sequence from the next item, adjusting the sum.
 '''
-def caterpillar(A: List[int], s: int):
-    front, total = 0, 0
+def caterpillar(A: List[int], target: int):
     n = len(A)
-    for back in range(n):
-        if back + 1 < n:
-            next_total = A[back + 1]
-        while front < n:
-            new_total = total + A[front]
-            if new_total <= s:
-                total = new_total
-                front += 1
-            else: break
-        if total == s:
+    if not n:
+        return False
+    back, front, total = 0, 0, A[0]
+    while front < n and back < n:
+        if total < target:
+            front += 1
+            total += A[front] if front < n else 0
+        if total == target:
             return True
-        total = next_total
+        if total > target:
+            if back < n:
+                total -= A[back]
+                back += 1
     return False
 
 if __name__ == '__main__':
