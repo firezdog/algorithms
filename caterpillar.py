@@ -3,15 +3,9 @@ import sys, traceback
 '''
 Check whether A[int] contains a contiguous sub-sequence of elements that sum to s.
 
-Solution: use the "caterpillar" method (https://codility.com/media/train/13-CaterpillarMethod.pdf) -- pick a candidate to start the sub-sequence, then move through the array, gradually increasing the sub-sequence, keeping track of its sum.  As long as 
+Solution: use the "caterpillar" method (https://codility.com/media/train/13-CaterpillarMethod.pdf), more commonly known as double-index method.  We keep two pointers to the head and tail of the sub-sequence.  As long as the pointers are within the array, we increase one or the other depending on whether we have exceeded the target sum.  If our sum is lower than the target, we add to the front -- with the result that the sum of our sub-sequence increases.  If our sum is greater than the target, we add to the back -- with the result that the sum of our sub-sequence decreases.  We return True when we reach the target; if we exceed the bounds of the array without reaching the target, we return false.  (If we sum over the whole array and never reach our target, front will increase and back will remain in place...
 
-    sum <= s
-
-we try to increase the size of the sub-sequence.  When we we overshoot the sum, we cancel growth and check our result.  If 
-
-    total = s, 
-
-we found the sub-sequence.  Otherwise, we should restart the sequence from the next item, adjusting the sum.
+TODO: apparently this will not work with negative numbers / negative sums)?
 '''
 def caterpillar(A: List[int], target: int):
     n = len(A)
@@ -19,6 +13,7 @@ def caterpillar(A: List[int], target: int):
         return False
     back, front, total = 0, 0, A[0]
     while front < n and back < n:
+        print(back, front)
         if total < target:
             front += 1
             if front < n:
