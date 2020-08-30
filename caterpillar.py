@@ -21,7 +21,8 @@ def caterpillar(A: List[int], target: int):
     while front < n and back < n:
         if total < target:
             front += 1
-            total += A[front] if front < n else 0
+            if front < n:
+                total += A[front]
         if total == target:
             return True
         if total > target:
