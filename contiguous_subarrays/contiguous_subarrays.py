@@ -3,7 +3,7 @@ def efficient_count_left(pointer, element, array, left_result):
     the reason this does not work is that you can have "valleys":
     [3, 4, 1, 6, 2] @1 is a valley with 0 as left result, but 6 is greater than 4 to its left
     so really we need the result from 4
-    this method can only save us from iterating  over elements to the left of the highest hill smaller than the current element
+    this method can only save us from iterating over elements to the left of the highest hill smaller than the current element
     '''
     result = 0
     if pointer == 0:
@@ -40,6 +40,45 @@ def count_right(pointer, element, array):
         else:
             break
     return count
+
+class LocalMax():
+    def __init__(self, element, position, count):
+        self.element = element
+        self.position = position
+        self.count = count
+
+def get_local_maxima(arr, left = True):
+    '''
+    given an array, returns a sub-array of local maxima 
+        each element has as attributes 
+            the maximum, 
+            number of elements to its left than which it is greater
+            position in the array
+    '''
+    maxima = []
+    i = len(arr) - 1 if left else 0
+    curr_max = arr[i]
+    curr_max_i = i
+    curr_max_count = 0
+    while i > 0 if left else i < len(arr) - 1:
+        next = arr[i - 1] if left else arr[i + 1]
+        if curr_max > next: curr_max_count += 1
+        else:
+            maxima.append(LocalMax(
+                curr_max, 
+                curr_max_i,
+                curr_max_count,
+            ))
+            curr_max = next
+            curr_max_i = i - 1 if left else i + 1
+            curr_max_count = 0
+        i += (-1 if left else 1)
+    maxima.append(LocalMax(
+        curr_max, 
+        curr_max_i,
+        curr_max_count,
+    ))
+    return maxima
 
 def count_subarrays(arr):
     result = [0] * len(arr)
