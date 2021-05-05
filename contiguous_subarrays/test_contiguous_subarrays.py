@@ -54,3 +54,17 @@ class Test_Contiguous_Subarrays():
         assert result_right[2].element == 7
         assert result_right[2].position == 2
         assert result_right[2].count == 3
+
+        result_right = get_local_maxima([1,2,3], False)
+
+        assert result_right[0].element == 1
+        assert result_right[1].element == 2
+        assert result_right[2].element == 3
+
+        assert result_right[0].position == 0
+        assert result_right[1].position == 1
+        assert result_right[2].position == 2
+
+        assert result_right[0].count == 0
+        assert result_right[1].count == 0
+        assert result_right[2].count == 0

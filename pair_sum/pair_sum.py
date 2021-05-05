@@ -49,11 +49,18 @@ def number_of_ways(arr: List, k):
         elif sought == 0:
             count += 1
         else:
-            next = 0
-            next_arr = sorted_arr[next:]
-            result = binary_search(next_arr, sought)
-            while (result[0] and len(next_arr) > 2):
-                count += int(result[0])
-                next_arr = sorted_arr[result[1]:]
-                result = binary_search(next_arr, sought)
+            result = binary_search(sorted_arr, sought)
+            if result[0]:
+                count += 1
+                result_index = result[1]
+                prev_result = result_index - 1
+                next_result = result_index + 1
+                # count backward to get duplicates before
+                while prev_result >= 0 and sorted_arr[prev_result] == sought: 
+                    count += 1
+                    prev_result -= 1
+                # count forward to get duplicates after
+                while next_result < len(sorted_arr) and sorted_arr[next_result] == sought:
+                    count += 1
+                    next_result += 1
     return count
