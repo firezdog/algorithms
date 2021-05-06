@@ -50,3 +50,23 @@ With 3 elements we have the following possible problems
 Then we would need an algorithm to blindly generate a graph for a given set of all permutations, take the permutation we're given as our source, and find the path to the destination using BFS (which can be used to find the shortest path)
 
 But how do we even generate the graph?
+
+Potential complication -- you are able to reverse more than just 2 digits (this would increase the number of links between graphs -- makes implementation a headache)
+
+https://en.wikipedia.org/wiki/Permutation_graph -- interesting resource (from https://stackoverflow.com/questions/9567992/constructing-a-permutation-graph) -- but not sure how much help it will be
+
+originally I was entertaining what I think is a dynamic programming idea, where for N, if you know you can get N-1 through an inversion, you would know that you can get N in 1 + 1 (the inversion for N-1 and then an additional permutation) -- but that can't be quite right, as it's possible when you add N that there's an additional shortest path (by inverting all N)
+
+    thinking about the above, look at 1,2 and 1,2,3
+    you can get from 1,2 to 2,1 -- that is an inversion and in fact the only permutation
+    in 1,2,3 you can use that to get to 2,1,3
+        but now there are additional permutations possible
+        3,2,1 is a complete inversion
+        1,3,2 is an additional sub-inversion
+            this gives you 2,3,1
+        so it seems like adding an additional element opens up a number of new paths, not just one more path
+            i.e. there's no clear relationship between the number of paths for N-1 and N
+            this makes sense, because we know the number of permutations for N is N!
+            so when you add a new element from N-1 to N, there are N(N-1) permutations I think
+
+building this graph brute force gives you N^2 things to look at -- get ALL the permutations, then check for each permutation whether another can be derived from it by inversion (but this check is not trivial and would probably involve more work)

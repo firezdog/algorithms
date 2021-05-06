@@ -3,12 +3,12 @@ from pair_sum import binary_search, number_of_ways
 def test_binary_search():
     test_array = [1, 2, 2, 5, 7, 7, 8, 10]
 
-    assert binary_search(test_array, 1) == 1
-    assert binary_search(test_array, 10) == 1
-    assert binary_search(test_array, 7) == 1
-    assert binary_search(test_array, 11) == 0
-    assert binary_search(test_array, 0) == 0
-    assert binary_search(test_array, 4) == 0
+    assert binary_search(test_array, 1) == 0
+    assert binary_search(test_array, 10) == 7
+    assert binary_search(test_array, 7) == 4 or 5
+    assert binary_search(test_array, 11) == -1
+    assert binary_search(test_array, 0) == -1
+    assert binary_search(test_array, 4) == -1
 
 
 def test_num_ways():
