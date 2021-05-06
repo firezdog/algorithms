@@ -23,3 +23,7 @@ def test_num_ways():
     arr = [1, 1, 1, 1]
     sought = 2
     assert number_of_ways(arr, sought) == 6
+
+    arr = [0, 3, -3, 6]
+    sought = 3
+    assert number_of_ways(arr, sought) == 2

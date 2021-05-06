@@ -18,49 +18,43 @@ from typing import List
 import math
 
 
-def binary_search(arr, sought):
+def binary_search(arr: List[int], sought: int) -> int:
     # assumes arr is sorted! non-recursive approach
     if not len(arr):
-        return (False, 0)
-    minimum = 0
-    maximum = len(arr) - 1
+        return -1
+    minimum: int = 0
+    maximum: int = len(arr) - 1
     while minimum <= maximum:
-        middle = math.floor((minimum + maximum) / 2)
-        tested = arr[middle]
+        middle: int = math.floor((minimum + maximum) / 2)
+        tested: int = arr[middle]
         if tested == sought:
-            return (True, middle)
+            return middle
         if tested < sought:
             minimum = middle + 1
             continue
         if tested > sought:
             maximum = middle - 1
             continue
-    return (False, middle)
+    return -1
 
 
-def number_of_ways(arr: List, k):
-    sorted_arr = sorted(arr)
-    count = 0
+def number_of_ways(arr: List, k: int) -> int:
+    sorted_arr: List[int] = sorted(arr)
+    count: int = 0
     while len(sorted_arr) > 1:  # we can't have a pair of one element
-        curr = sorted_arr.pop(0)
-        sought = k - curr
-        if sought < 0:
-            pass
-        elif sought == 0:
+        curr: int = sorted_arr.pop(0)
+        sought: int = k - curr
+        result: int = binary_search(sorted_arr, sought)
+        if result >= 0:
             count += 1
-        else:
-            result = binary_search(sorted_arr, sought)
-            if result[0]:
+            prev_result: int = result - 1
+            next_result: int = result + 1
+            # count backward to get duplicates before
+            while prev_result >= 0 and sorted_arr[prev_result] == sought: 
                 count += 1
-                result_index = result[1]
-                prev_result = result_index - 1
-                next_result = result_index + 1
-                # count backward to get duplicates before
-                while prev_result >= 0 and sorted_arr[prev_result] == sought: 
-                    count += 1
-                    prev_result -= 1
-                # count forward to get duplicates after
-                while next_result < len(sorted_arr) and sorted_arr[next_result] == sought:
-                    count += 1
-                    next_result += 1
+                prev_result -= 1
+            # count forward to get duplicates after
+            while next_result < len(sorted_arr) and sorted_arr[next_result] == sought:
+                count += 1
+                next_result += 1
     return count
