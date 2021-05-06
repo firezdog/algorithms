@@ -70,3 +70,10 @@ originally I was entertaining what I think is a dynamic programming idea, where 
             so when you add a new element from N-1 to N, there are N(N-1) permutations I think
 
 building this graph brute force gives you N^2 things to look at -- get ALL the permutations, then check for each permutation whether another can be derived from it by inversion (but this check is not trivial and would probably involve more work)
+
+looks like a solution is here: https://www.geeksforgeeks.org/minimum-number-of-prefix-reversals-to-sort-permutation-of-first-n-numbers/
+might be helpful to just work through this
+
+sub-problem -- generate all permutations from a given string
+    then we generate all permutations from those permutations
+    we keep a hash-table of permutations we have generated so far and stop when we generate nothing that isn't in the hashtable
