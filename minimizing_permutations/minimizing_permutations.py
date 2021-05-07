@@ -17,16 +17,18 @@ def generate_sub_permutations(seed):
         segment_length += 1
     return permutations
 
-def generate_all_permutations(input_string):
-    seen = {}
-    sub_permutations = generate_sub_permutations(input_string)
+def generate_permutation_graph(input_string):
+    permutation_graph = {}
+    sub_permutations = [input_string]
     while (len(sub_permutations)):
         sub_permutation = sub_permutations.pop()
-        seen[sub_permutation] = True
-        next_sub_permutations = generate_sub_permutations(sub_permutation)
-        for next_sub_permutation in next_sub_permutations:
-            if not seen.get(next_sub_permutation): sub_permutations.append(next_sub_permutation)
-    return seen
+        if not permutation_graph.get(sub_permutation):
+            next_sub_permutations = generate_sub_permutations(sub_permutation)
+            permutation_graph[sub_permutation] = next_sub_permutations
+            for next_sub_permutation in next_sub_permutations:
+                if not permutation_graph.get(next_sub_permutation):
+                    sub_permutations.append(next_sub_permutation)
+    return permutation_graph
 
 def min_operations(arr):
     '''
@@ -34,5 +36,7 @@ def min_operations(arr):
     '''
     pass
 
-result = generate_all_permutations('1234567')
+result = generate_permutation_graph('1234')
 print(len(result))
+for k in result:
+    print(f'{k} : {result[k]}')
