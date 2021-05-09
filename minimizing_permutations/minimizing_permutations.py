@@ -35,7 +35,7 @@ def min_operations(arr):
     arr is an array of integers of 1 to N, 1 < N < 8
     '''
     seed = ''.join(list(map(str,arr)))
-    reverse_sorted_seed = ''.join(list(map(str, sorted(arr, reverse=True))))
+    reverse_sorted_seed = ''.join(list(map(str, sorted(arr))))
     permutation_graph = generate_permutation_graph(seed)
 
     path = [seed]
@@ -48,7 +48,7 @@ def min_operations(arr):
             seen[next_permutation] = True
             for child in permutation_graph[next_permutation]:
                 if not seen.get(child): next_permutations.append(child)
-    return path
+    return len(path)
 
 result = min_operations([1,2,3])
 print(result)
