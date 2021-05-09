@@ -43,18 +43,15 @@ def min_operations(arr):
     next_permutations = [seed]
     while not seen.get(sought) and len(next_permutations):
         next_permutation = next_permutations.pop()
-        if not seen.get(next_permutation):
-            if next_permutation == sought:
-                path.append(sought)
-                return len(path) - 1
-            path.append(next_permutation)
-            seen[next_permutation] = True
-            for child in permutation_graph[next_permutation]:
-                if not seen.get(child):
-                    if child == sought:
-                        path.append(sought)
-                        return len(path) - 1
-                    next_permutations.append(child)
+        path.append(next_permutation)
+        seen[next_permutation] = True
+        for child in permutation_graph[next_permutation]:
+            if not seen.get(child):
+                if child == sought:
+                    path.append(sought)
+                    seen[child] = True
+                    break
+                next_permutations.append(child)
     return len(path) - 1
 
 result = min_operations([1,2,5,4,3])
