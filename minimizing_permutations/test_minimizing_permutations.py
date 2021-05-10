@@ -6,3 +6,6 @@ def test_min_operations():
 
     arr = [3, 1, 2]
     assert min_operations(arr) == 2
+
+    arr = [1, 2, 3, 6, 5, 4]
+    assert min_operations(arr) == 1
