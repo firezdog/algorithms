@@ -29,3 +29,9 @@ My Thoughts
     It seems like this can be solved with an iterative brute force -- just proceed from t to t+1 and calculate the new total users over all apps.  Stop on the first day that you surpass 1 billion.
 
     Since we can calculate g^t quite easily, a binary search (as suggested on the Internet) also seems very feasible.  We just keep doubling / halving t until our sum approaches 1 billion.
+
+    There is a slight wrinkle here, which is determining an initial upper bound.  The upper bound should be determined first (expand) before the binary search (squeeze / narrow).  We can get an upper bound by taking the slowest growth rate (smallest coefficient) and determing when that growth-rate is 1,000,000.  In the case where there is only one growth rate, as an added benefit, we would be done without any binary search.
+
+    How to calculate?
+
+    g^t = 1e9, so t = log_g(1e9) right?
