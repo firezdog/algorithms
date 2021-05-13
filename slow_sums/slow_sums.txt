@@ -48,5 +48,6 @@ My analysis:
         select the next least element 8, so we would have [2, 3, 4, 8, 9]
         so now we're done, and our total cost is
             8 + 9 + 4 + 17 + 3 + 21 + 2 + 24 + 26 = 114, which unfortunately doesn't seem right
+        redo penalties -- first penalty was 17, then 21, then 24, then 26 => 88 -- OK (penalty at each stage, not the sum across all pairs used)
     Above idea does at least agree with general idea for greedy algorithm:
         A greedy algorithm is any algorithm that follows the problem-solving heuristic of making the locally optimal choice at each stage.[1] In many problems, a greedy strategy does not usually produce an optimal solution, but nonetheless, a greedy heuristic may yield locally optimal solutions that approximate a globally optimal solution in a reasonable amount of time. (Wikipedia)
