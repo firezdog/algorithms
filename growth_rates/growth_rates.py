@@ -4,7 +4,7 @@ def brute_force(growth_rates):
     t = 0
     while (True):
         users = 0.0
-        for rate in growthRates:
+        for rate in growth_rates:
             users += rate ** t
         if users > 1e9: break
         t += 1
