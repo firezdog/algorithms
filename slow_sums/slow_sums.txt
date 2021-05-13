@@ -1,0 +1,50 @@
+Slow Sums
+    Suppose we have a list of N numbers, and repeat the following operation until we're left with only a single number: Choose any two numbers and replace them with their sum. Moreover, we associate a penalty with each operation equal to the value of the new number, and call the penalty for the entire list as the sum of the penalties of each operation.
+    For example, given the list [1, 2, 3, 4, 5], we could choose 2 and 3 for the first operation, which would transform the list into [1, 5, 4, 5] and incur a penalty of 5. The goal in this problem is to find the worst possible penalty for a given input.
+Signature:
+    int getTotalTime(int[] arr)
+Input:
+    An array arr containing N integers, denoting the numbers in the list.
+    Output format:
+    An int representing the worst possible total penalty.
+Constraints:
+    1 ≤ N ≤ 10^6
+    1 ≤ Ai ≤ 10^7, where *Ai denotes the ith initial element of an array.
+    The sum of values of N over all test cases will not exceed 5 * 10^6.
+Example
+    arr = [4, 2, 1, 3]
+    output = 26
+    First, add 4 + 3 for a penalty of 7. Now the array is [7, 2, 1]
+    Add 7 + 2 for a penalty of 9. Now the array is [9, 1]
+    Add 9 + 1 for a penalty of 10. The penalties sum to 26.
+
+My analysis:
+    The final penalty is just the sum of all elements in the array
+    The final penalty is always the result of the only possible remaining operation, so it is correct (highest cost)
+        we should be able to work backward from any correct result to the uniquely correct input to get to that result -- if we can determine the state of the array before that result
+        i.e. we would only if we work back one step have two choices, and it would be easy to choose the one that gives us the highest penalty?
+        example:
+            the finaly penalty is 10 <= [9, 1]
+            the next final is 9 <= [7, 2, 1]
+                if we were working forward, we would have to choice between (7,2), (7,1) and (2,1)
+                I guess that since we already know the last result was 9, we know that only 7 and 2 could produce 9
+    still not sure about ^ -- what would it look like to work backward given the whole array?
+        start [4, 2, 1, 3] -- I know the last operation will be 10
+        maybe if i choose 1 as the least element that remains, I know the last penalty is 9 + 1 = 10, so next last operation is 9
+        now I would choose from [4, 2, 3], and I could choose 2 as the least element, to give me next next to last operation of 7
+        now I would choose from [4, 3] and I could choose 3 as the least element, to give me next next next to last operation of 4
+        I end up with [3] -- so is the sequence going back going to be
+            4 + 3
+            7 + 2
+            9 + 1
+        and 4 + 3 + 7 + 2 + 9 + 1 = 26
+        so something about working backwards like this could be right
+    another example
+        start [2, 3, 9, 8, 4]
+        i know the last operation will be sum() = 26
+        select the least element 2, so we would have [2, 24]
+        select the next least element 3, so we would have [2, 3, 21]
+        select the next least element 4, so we would have [2, 3, 4, 17]
+        select the next least element 8, so we would have [2, 3, 4, 8, 9]
+        so now we're done, and our total cost is
+            8 + 9 + 4 + 17 + 3 + 21 + 2 + 24 + 26 = 114, which unfortunately doesn't seem right

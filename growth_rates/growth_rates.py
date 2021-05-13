@@ -21,8 +21,12 @@ def get_population(growth_rates, time):
     return users
 
 def efficient_search(growth_rates):
-    low = 0
     high = get_upper_limit(growth_rates)
+    # small optimization -- don't do binary search if we can just solve the equation for one value
+    if len(growth_rates) == 1:
+        return high
+    
+    low = 0
     population = 0
     while low <= high:
         mid = (low + high) / 2
