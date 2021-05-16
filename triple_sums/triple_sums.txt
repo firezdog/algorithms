@@ -45,3 +45,6 @@ My Observations
 
     KEY IDEA: One thing you could do is consider largest[] as a 3 item heap, where 0 is the parent and 1 and 2 are the children
         even a heap-as-binary-tree where 0 is the middle, 1 is the smaller, 2 is the larger -- very easy to make a replacement here
+
+    proper heap implementation: the parent is always smaller than the children
+        so if the item we hit is >= to the first, check the children?
