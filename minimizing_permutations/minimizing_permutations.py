@@ -34,9 +34,25 @@ def min_operations(arr):
     '''
     arr is an array of integers of 1 to N, 1 < N < 8
     '''
-    pass
+    seed = ''.join(list(map(str,arr)))
+    sought = ''.join(list(map(str, sorted(arr))))
+    permutation_graph = generate_permutation_graph(seed)
 
-result = generate_permutation_graph('1234')
-print(len(result))
-for k in result:
-    print(f'{k} : {result[k]}')
+    path = []
+    seen = {}
+    next_permutations = [seed]
+    while not seen.get(sought) and len(next_permutations):
+        next_permutation = next_permutations.pop()
+        path.append(next_permutation)
+        seen[next_permutation] = True
+        for child in permutation_graph[next_permutation]:
+            if not seen.get(child):
+                if child == sought:
+                    path.append(sought)
+                    seen[child] = True
+                    break
+                next_permutations.append(child)
+    return len(path) - 1
+
+result = min_operations([1,2,5,4,3])
+print(result)

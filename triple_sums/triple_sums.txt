@@ -1,0 +1,50 @@
+Largest Triple Products
+    You're given a list of n integers arr[0..(n-1)]. You must compute a list output[0..(n-1)] such that, for each index i (between 0 and n-1, inclusive), output[i] is equal to the product of the three largest elements out of arr[0..i] (or equal to -1 if i < 2, as arr[0..i] then includes fewer than three elements).
+    Note that the three largest elements used to form any product may have the same values as one another, but they must be at different indices in arr.
+Signature
+    int[] findMaxProduct(int[] arr)
+Input
+    n is in the range [1, 100,000].
+    Each value arr[i] is in the range [1, 1,000].
+Output
+    Return a list of n integers output[0..(n-1)], as described above.
+Example 1
+    n = 5
+    arr = [1, 2, 3, 4, 5]
+    output = [-1, -1, 6, 24, 60]
+    The 3rd element of output is 3*2*1 = 6, the 4th is 4*3*2 = 24, and the 5th is 5*4*3 = 60.
+Example 2
+    n = 5
+    arr = [2, 1, 2, 1, 2]
+    output = [-1, -1, 4, 4, 8]
+    The 3rd element of output is 2*2*1 = 4, the 4th is 2*2*1 = 4, and the 5th is 2*2*2 = 8.
+
+My Observations
+    Sorting is not enough, because we need the particular sorted sub-array corresponding to our element
+    i.e. if we're on element 2 and the array is [1, 1, 7, 3] we can't just say the answer is 3 * 1 * 1 because 3 is actually not within scope
+        this would give us an answer that is too small, in fact, because the larger 7 is in scope
+        consider also wrt ex 2 above
+    So the brute force method would be to find the 3 largest elements for the sub-array we are concerned with (or to take them from a sorted sub-array)
+    How would we use a heap to solve this problem?
+
+    we know that when we get to index 2, the result is just multiplying the three numbers
+    then when we get to the next index, it's easy to replace one of the numbers if we have something greater...
+    so why can't we just do that?
+
+    e.g.
+    [2, 1, 2, 1, 2] 
+        @ 2 => 2, 1, 2
+        @ 3 => 2, 1, 2 (1 does not replace anything)
+        @ 4 => 2, 2, 2 (2 replaces 1)
+
+    we should be able to build our array after a single loop through...
+
+    I just don't see where a heap comes in
+
+    but I guess there's a slight inefficiency in this solution b/c you have to iterate through the three elements to find out which of them to replace
+
+    KEY IDEA: One thing you could do is consider largest[] as a 3 item heap, where 0 is the parent and 1 and 2 are the children
+        even a heap-as-binary-tree where 0 is the middle, 1 is the smaller, 2 is the larger -- very easy to make a replacement here
+
+    proper heap implementation: the parent is always smaller than the children
+        so if the item we hit is >= to the first, check the children?
