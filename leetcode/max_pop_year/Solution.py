@@ -3,9 +3,9 @@ from typing import List
 
 class Solution:
     def __init__(self, logs):
-        self.solution = self.maximumPopulations(logs)
+        self.solution = self.maximumPopulation(logs)
 
-    def maximumPopulations(self, logs: List[List[int]]) -> int:
+    def maximumPopulation(self, logs: List[List[int]]) -> int:
         if len(logs) < 0: return 0
         chronolog = sorted(logs, key=lambda log: log[0])
         
@@ -25,7 +25,7 @@ class Solution:
 
             if max_pop < current_pop: max_pop = current_pop
 
-        return max_pop
+        return max_pop  # TODO: needs to return the year
 
 data = [[1950, 1961], [1961, 1971]]
 test = Solution(logs=data)
