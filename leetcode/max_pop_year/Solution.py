@@ -9,15 +9,24 @@ class Solution:
         if len(logs) < 0: return 0
         chronolog = sorted(logs, key=lambda log: log[0])
         
-        deaths = [chronolog[0][1]] # idea -- pop deaths off as they become relevant, otherwise keep a queue
+        deaths = [] # idea -- pop deaths off as they become relevant, otherwise keep a queue
+        next_death = chronolog[0][1]
         current_pop = 0
         max_pop = 0
         
         for log in chronolog:
-            pass
+            current_pop += 1
+            deaths.append(log[1])
 
-        return 0
+            now = log[0]
+            if next_death <= now: 
+                current_pop -= 1
+                next_death = deaths.pop(0)
 
-data = [[1950, 1961], [1960, 1971], [1970, 1981]]
+            if max_pop < current_pop: max_pop = current_pop
+
+        return max_pop
+
+data = [[1950, 1961], [1961, 1971]]
 test = Solution(logs=data)
 print(test.solution)
