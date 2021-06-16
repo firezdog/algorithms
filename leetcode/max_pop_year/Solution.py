@@ -21,7 +21,7 @@ class Solution:
             now = log[0]
             if next_death <= now: 
                 current_pop -= 1
-                next_death = deaths.pop(0)
+                next_death = deaths.pop(0) # this won't be correct, b/c there is no order among the deaths and pop will be out of whack
 
             if max_pop < current_pop: max_pop = current_pop
 
