@@ -34,3 +34,7 @@ My Notes
     ^ best thing to do seems to be to sort the 2D array by ascending birth-years
         then count through each birth year, keeping track of the total pop and max pop each time
             you could think of this as skipping an intermediate step of producing an array of year pop, then getting max from that array
+
+example:
+
+(1952 (1987 (1994 2006) 2009) (2021 (2036 2040) 2042) (2047) 2049)

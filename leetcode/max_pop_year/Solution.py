@@ -1,38 +1,31 @@
 from typing import List
 
 
+'''
+This finally works, based off answer in one of the comments on the original problem.
+That solution flattens the original data into a list of years and pop changes for that year --
+Somewhat similar to my original idea that there's an isomorphism of a kind between this problem
+and finding the earliest max open parentheses in a string.  
+I found it necessary to use a dictionary first 
+because the original flattened event_list could contain duplicate years and return an incorrect maximum
+based on a partial population update for that year.
+'''
 class Solution:
     def maximumPopulation(self, logs: List[List[int]]) -> int:
-        if len(logs) < 0: return 0
-
-        logs_by_birth = sorted(logs, key=lambda log: log[0])
-        logs_by_death = sorted(logs, key=lambda log: log[1])
+        events = {}
+        for birth_year, death_year in logs:
+            events[birth_year] = events.get(birth_year, 0) + 1
+            events[death_year] = events.get(death_year, 0) - 1
         
-        next_death = logs_by_death[0][1]
-        next_death_ptr = 1
+        event_list = sorted(events.items(), key=lambda item: item[0])
 
         current_pop = 0
-        max_pop = 0
-        max_pop_year = 0
+        max_pop = [0,0]
+
+        for year, result in event_list:
+            current_pop += result
+            if max_pop[0] < current_pop:
+                max_pop[0] = current_pop
+                max_pop[1] = year
         
-        for log in logs_by_birth:
-            current_pop += 1
-
-            now = log[0]
-            while next_death <= now: 
-                current_pop -= 1
-                next_death_ptr += 1
-                try:
-                    next_death = logs_by_death[next_death_ptr][1]
-                except:
-                    break
-
-            if max_pop < current_pop:
-                max_pop = current_pop
-                max_pop_year = now
-
-        return max_pop, max_pop_year
-
-data = [[1987,2047],[1952,2006],[2021,2042],[2047,2049],[2036,2040],[1994,2009]]
-test = Solution()
-print(test.maximumPopulation(logs=data)) # not sure if this is absolutely wrong, but in terms of constraints it is wrong b/c it does not return the earliest year
+        return max_pop[1]
