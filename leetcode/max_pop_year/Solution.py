@@ -12,20 +12,32 @@ based on a partial population update for that year.
 '''
 class Solution:
     def maximumPopulation(self, logs: List[List[int]]) -> int:
-        events = {}
+        events = []
         for birth_year, death_year in logs:
-            events[birth_year] = events.get(birth_year, 0) + 1
-            events[death_year] = events.get(death_year, 0) - 1
+            events.append([birth_year, 1])
+            events.append([death_year, -1])
         
-        event_list = sorted(events.items(), key=lambda item: item[0])
+        events = sorted(events, key=lambda event: event[0])
 
         current_pop = 0
         max_pop = [0,0]
 
-        for year, result in event_list:
+        idx = 0
+        while idx < len(events):
+            event = events[idx]
+            year = event[0]
+            result = event[1]
+
             current_pop += result
-            if max_pop[0] < current_pop:
+
+            if (
+                max_pop[0] < current_pop 
+                and idx + 1 < len(events) 
+                and not events[idx +1][0] == year
+            ):
                 max_pop[0] = current_pop
                 max_pop[1] = year
+        
+            idx += 1
         
         return max_pop[1]
